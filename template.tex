@@ -1,0 +1,215 @@
+%% 豊橋技術科学大学の卒論・修論サンプルファイル（pLaTeX, upLaTeX）
+%%
+%% 形式的な目安
+%% 【卒論】
+%%  ・参考文献10件以上，本文12,000文字以上
+%% 【修論】
+%%  ・参考文献25件以上，本文25,000文字以上
+%%  ・参考文献の半数以上は英語論文
+%%
+%% 記述の際には，文単位で改行を入れておくと，diffが見やすくなります．
+%%
+\IfFileExists{plautopatch.sty}{\RequirePackage{plautopatch}}{} % パッケージの互換性問題を解消するパッチ
+
+\documentclass[a4paper,11ptj,dvipdfmx]{jsreport} %pLaTEX
+%\documentclass[a4paper,11ptj,dvipdfmx,uplatex]{jsreport} %upLaTeX
+
+\usepackage{graphicx} % \includegraphics[width=0.98\linewidth]{sample.pdf}
+%\usepackage{color}
+%\usepackage{comment}
+%\usepackage{multirow}
+%\usepackage{pdfpages} % \includepdf
+%\usepackage[caption=false]{subfig} % \subfloat[]{}
+
+% PDFに「しおり」を付ける
+\usepackage[setpagesize=false,bookmarks=true,bookmarksnumbered=true,bookmarkstype=toc]{hyperref}
+\usepackage{pxjahyper} % 文字化け防止
+
+% 英字フォント設定
+\usepackage[T1]{fontenc} % おまじない
+\usepackage{newtxtext,newtxmath} % Times
+%\usepackage{lmodern} % Latin Modern
+
+% 日本語フォント設定（文字化けする場合はコメントアウト）
+\usepackage[expert,deluxe]{otf} %pLaTEX
+%\usepackage[expert,deluxe,uplatex]{otf} %upLaTeX
+
+\usepackage[nobreak]{cite} % 引用の手前で改行されるのを防ぐ
+\usepackage{bm} % 数式のベクトル表記 \bm{}
+\usepackage{amsmath} % よりよい数式
+\usepackage{url} % \url{}
+\usepackage[normalem]{ulem} % 下線 \uline{}, \uuline{}
+%\usepackage{lscape} % \begin{landscape} から \end{landscape} を90度回転させる
+%\usepackage{siunitx} % \SI{数値}{単位}, \si{単位} 例：\si{km}
+
+% 数式 argmax, argmin の定義
+\newcommand{\argmin}{\mathop{\rm arg~min}\limits}
+\newcommand{\argmax}{\mathop{\rm arg~max}\limits}
+\newcommand{\sargmax}{\mathop{\rm arg~max^*}\limits}
+
+% 表と図の参照を挿入するコマンドの定義
+\newcommand\figref[1]{図~\ref{#1}}
+\newcommand\tabref[1]{表~\ref{#1}}
+\newcommand\cpref[1]{第~\ref{#1}章}
+\newcommand\secref[1]{第~\ref{#1}節}
+
+%%
+%% 表紙の設定
+%% 
+\usepackage{tut-thesis}
+
+% タイトル（最大4行）
+\title{豊橋技術科学大学の卒論・修論テンプレート}
+
+% 学籍番号
+\idnum{19XXXX}
+
+% 著者
+\author{豊橋太郎}
+
+% 専攻・課程
+\department{情報・知能工学課程} % 卒論
+%\department{情報・知能工学専攻} % 修論
+
+% 学位
+\degree{卒業研究論文} % 卒論
+%\degree{修士（工学）} % 修論
+
+%% 卒業・修了年度（西暦）
+\gyear{2021}
+
+%% 指導教員（修論ではコメントアウト）
+\advisor{豊橋花子}
+
+
+\begin{document}
+\maketitle
+
+%%
+%% 論文の要旨
+%%
+% 卒論は手書き．日英併記する場合は間に \par\vspace{3em} を入れる．英語は概要集の英文を記入すれば良い．
+\begin{abstract}
+豊橋技術科学大学では，卒業研究論文のフォーマットは定められていない．
+また，修士論文においては，フォーマットのチェックが厳しいにもかかわらず，フォーマットに適合するテンプレートが配布されていない．
+本研究では，豊橋技術科学大学の卒業研究論文と修士論文のフォーマットに適合するLaTeXテンプレートを設計した．
+作動検証により，pLaTeX及びupLaTeXを用いてフォーマットに適合する論文の出力を確認した．
+なお，博士論文はより規模が大きくなることから，jsbookが適当と考えられ，本テンプレートでは対応しない．
+\par\vspace{3em}
+The format of the bachelor's thesis is not defined at Toyohashi University of Technology.
+In the master's thesis, although the format is strictly checked, the template that fits the format are not distributed.
+In this study, we designed a LaTeX template that fits the format of the bachelor's thesis and master's thesis of Toyohashi University of Technology.
+We also confirmed the output of the thesis that fits the format with pLaTeX and upLaTeX.
+\end{abstract}
+
+% 修論は提出した要旨（日英）のPDFを挿入
+%\newgeometry{}
+%\includepdf{abstract/abstract-ja.pdf}
+%\includepdf{abstract/abstract-en.pdf}
+%\restoregeometry
+
+%%
+%% 目次
+%%
+\setcounter{tocdepth}{3}
+\pagenumbering{roman} % I, II, III, IV 
+\tableofcontents
+\listoffigures
+\listoftables
+
+%%
+%% 本文
+%%
+\pagebreak \setcounter{page}{1}
+\pagenumbering{arabic} % 1,2,3
+
+\chapter{はじめに}\label{Introduction}
+研究の背景，目的を書く．
+「はじめに」とせずに「序論」とする流儀もある．
+
+% \input{chapters/01_introduction}
+% のようにファイルを分けた方が見通しが良くなる
+
+% 図の挿入サンプル．位置指定は tp がお勧めです．
+%\begin{figure}[tp]
+%  \centering
+%  \includegraphics[width=0.95\linewidth]{figures/sample.pdf}
+%  \caption{キャプション}
+%  \label{ラベル}
+%\end{figure}
+
+% 図の挿入サンプル（図目次と本文で異なるキャプションを設定する場合）
+%\begin{figure}[tp]
+%  \centering
+%  \includegraphics[width=0.95\linewidth]{figures/sample.pdf}
+%  \caption[図目次用のキャプション]{本文用のキャプション}
+%  \label{ラベル}
+%\end{figure}
+
+% 比較する図の挿入サンプル．図目次に副キャプションが出ないのですっきりします．
+%\begin{figure}[tp]
+%  \centering
+%  \subfloat[副キャプション1]{
+%    \includegraphics[width=0.45\linewidth]{figures/sample.pdf}
+%    \label{副ラベル1}
+%  }
+%  \qquad
+%  \subfloat[副キャプション2]{
+%    \includegraphics[width=0.45\linewidth]{figures/sample.pdf}
+%    \label{副ラベル2}
+%  }
+%  \caption{全体キャプション}
+%  \label{全体ラベル}
+%\end{figure}
+
+\chapter{関連研究}\label{RelatedWork}
+本研究に関係する研究を取り上げる．
+卒論の場合は参考文献10件以上，修論の場合は参考文献25件以上（半数以上は英語論文）が目安．
+過去の研究を並べるに留まらず，提案手法や貢献と対応付けられる構造を意識すること．
+分量が少ない場合，「はじめに」の背景にマージするのでも良い．
+
+参考文献はBibTeXを使うとよい
+
+\chapter{定式化}
+
+\chapter{提案手法}
+
+\chapter{評価実験}
+
+
+\chapter{おわりに}\label{Conclusion}
+「はじめに」と対応するように書く．
+「序論」とした場合は「結論」とする．
+
+% 参考文献
+%\bibliographystyle{jsai} % 著者+年号（人工知能学会のスタイル）
+\bibliographystyle{junsrt} % ナンバリング
+\bibliography{references}
+
+
+\chapter*{これまでの発表論文}
+\addcontentsline{toc}{chapter}{これまでの発表論文}
+% 学位論文提出時の業績リストとし，修論の場合は学部の時の対外発表についても書く．
+
+%本論文における第3章の主な内容は下記として公表済みである．
+本研究の一部は下記として公表済みである．
+
+\begin{enumerate}
+\item 
+\uline{豊橋太郎}, 豊橋花子.\\
+豊橋技術科学大学の卒論・修論テンプレートの試作.\\
+LaTeXテンプレート研究会, 2020年8月.
+\end{enumerate}
+
+
+\chapter*{謝辞}
+\addcontentsline{toc}{chapter}{謝辞}
+研究に貢献した人を漏らさず書く．指導教員，主査，副査，共著者など．
+
+
+% 付録
+\appendix
+\chapter{システム設計書}
+本論文のほかにシステム設計書や実験結果の詳細などがあれば書く．
+
+\end{document}

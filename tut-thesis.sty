@@ -1,0 +1,138 @@
+% 豊橋技術科学大学の卒論・修論スタイルファイル（jsreport）
+
+% 余白調整
+%\usepackage[driver=dvipdfm,truedimen,left=20truemm,right=20truemm,top=30truemm,bottom=30truemm,showframe]{geometry}
+\usepackage[driver=dvipdfm,truedimen,left=20truemm,right=20truemm,top=30truemm,bottom=30truemm]{geometry}
+
+% 図表調整（図表でページを埋め尽くせる設定）
+% http://www.ice.is.kit.ac.jp/~umehara/misc/comp/latex.html
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\dbltopfraction}{1.0}
+\renewcommand{\textfraction}{0.01}
+\renewcommand{\floatpagefraction}{1.0}
+\renewcommand{\dblfloatpagefraction}{1.0}
+\setcounter{topnumber}{5}
+\setcounter{bottomnumber}{5}
+\setcounter{totalnumber}{10}
+
+\makeatletter
+
+\def\idnum#1{\def\@idnum{#1}} % 学籍番号
+\def\department#1{\def\@department{#1}} % 専攻・課程
+\def\degree#1{\def\@degree{#1}} % 学位
+\def\gyear#1{\def\@gyear{#1}} % 修了・卒業年度
+\def\@advisor{}
+\def\advisor#1{\def\@advisor{#1}} % 指導教員
+
+% 表紙
+\renewcommand{\maketitle}{
+  \begin{titlepage}
+    \let\footnotesize\small
+    \let\footnoterule\relax
+    \null\vfil
+    \begin{center}
+      \huge{\@title}
+      \par
+      \vspace{6em}
+      \Large{\@gyear}
+      \par
+      \vspace{1em}
+      \Large{\@degree}
+      \par
+      \vspace{1em}
+      \Large {\@department}
+      \par
+      \vspace{5em}
+      \LARGE{
+        \@author \\
+        \@idnum
+      }
+      \par\vspace{1em}
+      \ifx \@advisor\empty
+        \vspace{1em}
+      \else
+        \Large{（指導教員 ~ \@advisor）}
+        \par
+      \fi
+      \vspace{1em}
+      \LARGE{豊橋技術科学大学}
+    \end{center}
+    \par
+  \end{titlepage}
+  \setcounter{footnote}{0}
+  \global\let\maketitle\relax
+  \global\let\@author\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\and\relax
+  \global\let\@idnum\@empty
+  \global\let\@department\@empty
+  \global\let\@degree\@empty
+  \global\let\@gyear\@empty
+  \global\let\@advisor\@empty
+  \global\let\idnum\relax
+  \global\let\department\relax
+  \global\let\degree\relax
+  \global\let\gyear\relax
+  \global\let\advisor\relax
+}
+
+% 要旨
+\renewenvironment{abstract}{
+  \begin{center}
+    \Large{\textbf{要旨}}
+    \vspace{2em}
+  \end{center}
+  \par
+}{
+  \thispagestyle{empty}
+  \newpage
+}
+
+% 章番号と章タイトルの間の改行を除去する
+% 章の前後の余白を狭くする 前: 2\Cvs -> 1\Cvs, 後：3\Cvs -> 2\Cvs
+% 章タイトルのサイズを章番号に合わせる \Huge -> \huge
+\renewcommand\@makechapterhead[1]{%
+  \vspace*{1\Cvs}% 欧文は50pt
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+        \huge\headfont \@chapapp\thechapter\@chappos
+        \hskip1zw
+    \fi
+    \interlinepenalty\@M
+    \huge \headfont #1\par\nobreak
+    \vskip 2\Cvs}} % 欧文は40pt
+\renewcommand\@makeschapterhead[1]{%
+  \vspace*{1\Cvs}% 欧文は50pt
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \huge \headfont #1\par\nobreak
+    \vskip 2\Cvs}} % 欧文は40pt
+
+% 参考文献を目次に出力する
+\renewenvironment{thebibliography}[1]{%
+  \global\let\presectionname\relax
+  \global\let\postsectionname\relax
+  \chapter*{\bibname}\@mkboth{\bibname}{}%
+  \addcontentsline{toc}{chapter}{\bibname}%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+
+\makeatother
